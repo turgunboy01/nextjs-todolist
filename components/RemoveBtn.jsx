@@ -6,6 +6,7 @@ import { HiOutlineTrash } from "react-icons/hi";
 
 export const RemoveBtn = ({ id }) => {
   const router = useRouter();
+
   const removeTopic = async () => {
     const confirmed = confirm("Are you sure?");
     if (confirmed) {
