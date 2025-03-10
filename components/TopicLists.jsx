@@ -9,20 +9,24 @@ const getTopics = async () => {
       cache: "no-cache",
     });
     if (!res.ok) {
-      throw new Error("Faild to fetch topics");
+      throw new Error("Failed to fetch topics");
     }
-    return res.json();
+    return await res.json();
   } catch (error) {
-    console.log(error);
+    console.log("Error fetching topics:", error);
+    return { topics: [] }; // ⚠️ Kamida bo‘sh array qaytarish
   }
 };
 
 export const TopicLists = async () => {
-  const { topics } = await getTopics();
+  const data = await getTopics();
 
+  if (!data || !data.topics) {
+    return <p>No topics available</p>; // ⚠️ Agar API ishlamayotgan bo‘lsa, foydalanuvchiga bildirish
+  }
   return (
     <>
-      {topics.map((t) => (
+      {data?.topics.map((t) => (
         <div
           key={t._id}
           className="flex justify-between items-start gap-5 p-4 border border-slate-300 my-4"
